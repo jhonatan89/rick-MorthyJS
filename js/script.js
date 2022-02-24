@@ -1,6 +1,6 @@
 const API_RICK_MORTHY = 'https://rickandmortyapi.com/api/character';
 const containerRef = document.getElementById('container');
-
+document.que
 
 async function getData() {
   const result = await fetch(API_RICK_MORTHY);
@@ -19,17 +19,18 @@ async function getData() {
 async function render(){
     const data = await getData();
     const row = document.createElement('div');
-    row.className = 'row gy-5 ';
+    row.className = 'row gy-5 mx-n5';
     const dataMapped = data.results.map((character) => {
-        const p = document.createElement('p');
-        
-
+      
+        const auxcol = document.createElement('div');
+        auxcol.className = 'col-md-4 col-sm-12 m-10 p-10';
         const card = document.createElement('div');
-        card.className = 'card col-4 m-100 p-100 border';
+        card.className = 'card col-12';
 
         const img = document.createElement('img');
         img.className = 'card-img-top'
         img.src = character.image;
+        img.alt = character.name;
 
         const body = document.createElement('div');
         body.className = 'card-body'
@@ -79,8 +80,9 @@ async function render(){
 
         card.appendChild(img);
         card.appendChild(body);
-        
-      row.appendChild(card);
+
+      auxcol.appendChild(card);
+      row.appendChild(auxcol);
       containerRef.appendChild(row);
        
     })

@@ -5,14 +5,12 @@ const detailRef = document.getElementById('detail');
 async function getData() {
   const result = await fetch(API_RICK_MORTHY);
   const data = await result.json();
-  console.log('result', data);
   return data;
 }
 
 async function getEpisodeData(url) {
   const result = await fetch(url);
   const episode = await result.json();
-  console.log('result', episode);
   return episode.name;
 }
 
@@ -27,6 +25,9 @@ async function render(){
         auxcol.className = 'col-md-4 col-sm-12 m-10 p-10';
         const card = document.createElement('div');
         card.className = 'card col-12';
+        card.onclick = function () {
+          showDetail(character);
+        }
 
         const img = document.createElement('img');
         img.className = 'card-img-top'
@@ -82,9 +83,6 @@ async function render(){
           const button_detail = document.createElement('div');
           
           button_detail.className = 'btn btn-primary';
-          button_detail.onclick = function(){
-           showDetail(character);
-          };
           button_detail.innerText = "Show detail";
           body.appendChild(button_detail);
           
@@ -103,7 +101,6 @@ async function render(){
 
 async function renderDetail(character) {
   
-  console.log(character.name);
   const row = document.createElement('div');
   row.className = 'row ';
     const left = document.createElement('div');
@@ -171,21 +168,12 @@ async function renderDetail(character) {
         episodes.className = 'col-6';
         for(const episode of character.episode){
           const episode_name = await getEpisodeData(episode);
-          console.log(episode_name);
           episodes.append(episode_name);
           episodes.append(", ");
         }
-        
         right_row.appendChild(episodes);
-
-        
-        
         right.appendChild(right_row);
-        
-
   detailRef.appendChild(row);
-  console.log(detailRef);
-
 } 
 
 async function showDetail(character){

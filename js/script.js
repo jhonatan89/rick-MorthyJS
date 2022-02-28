@@ -104,7 +104,6 @@ async function render(){
 async function renderDetail(character) {
   
   console.log(character.name);
-  
   const row = document.createElement('div');
   row.className = 'row ';
     const left = document.createElement('div');

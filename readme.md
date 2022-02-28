@@ -1,3 +1,3 @@
 ### Rick and Morty
-Gabriel Beltran - 201921903
+Juan Pablo Galvis - 201922278
 

@@ -33,9 +33,32 @@ function render(data){
     })
 }
 
+oculta=false;
+
 function foo(item){
     var x = document.getElementById(item);
-    var y = x.children[2];
+    var y = x.children[2]
+
+    let lista = document.getElementById('cont');
+    let i=0;
+    if(oculta==false){
+          for(divs in lista){
+              if(lista.children[i]!=undefined && item!=lista.children[i].id){
+                lista.children[i].style.display="none";
+              }
+              i+=1;
+          }
+        oculta=true;
+    }
+    else{
+        for(divs in lista){
+            if(lista.children[i]!=undefined && item!=lista.children[i].id){
+              lista.children[i].style.display="block";
+            }
+            i+=1;
+        }
+        oculta=false;
+    }
     
     if (y.style.display === "none") { 
      y.style.display = "block";
@@ -43,6 +66,7 @@ function foo(item){
     y.style.display = "none";
     }
 }
+
 
 async function getData(){
     const result = await fetch(API_RICK_MORTY);

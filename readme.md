@@ -1,3 +1,5 @@
 ### Rick and Morty
-Gabriel Beltran - 201921903
+Juan David Diaz - 201729408 
+
+Copié y pegué las clases que yo tenía de la entrega del bono pasado.
 

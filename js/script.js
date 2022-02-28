@@ -36,6 +36,7 @@ async function render(){
         const body = document.createElement('div');
         body.className = 'card-body'
           const title = document.createElement('h4');
+          const title = document.createElement('h5');
           title.innerText = character.name;
           title.className = 'card-title';
           body.appendChild(title);

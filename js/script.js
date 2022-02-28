@@ -1,7 +1,14 @@
+
+
+
 const API_RICK_MORTHY = 'https://rickandmortyapi.com/api/character';
+// Container for general cards 
 const containerRef = document.getElementById('container');
+// Container for detail cards
+const containerDetailRef = document.getElementById('containerDetail');
+var isDetail = false;
 
-
+// Retrive data from API
 async function getData() {
   const result = await fetch(API_RICK_MORTHY);
   const data = await result.json();
@@ -9,76 +16,132 @@ async function getData() {
   return data;
 }
 
-async function render(){
-    const data = await getData();
-    const row = document.createElement('div');
-    row.className = 'row gy-5 mx-n5';
-    const dataMapped = data.results.map((character) => {
-      
-        const auxcol = document.createElement('div');
-        auxcol.className = 'col-md-4 col-sm-12 m-10 p-10';
-        const card = document.createElement('div');
-        card.className = 'card col-12';
+// Function to render the general cards
+async function render() {
+  const data = await getData();
+  const dataMapped = data.results.map((character) => {
 
-        const img = document.createElement('img');
-        img.className = 'card-img-top'
-        img.src = character.image;
-        img.alt = character.name;
+    let card = document.createElement('div');
+    card.className = 'card shadow cursor-pointer';
+    card.id = character.name + "c";
 
-        const body = document.createElement('div');
-        body.className = 'card-body'
-          const title = document.createElement('h5');
-          title.innerText = character.name;
-          title.className = 'card-title';
-          body.appendChild(title);
+    let img = document.createElement('img');
+    img.className = 'card-img-top';
+    img.src = character.image;
+    img.alt = character.name;
 
-          const status_row = document.createElement('div');
-          status_row.className = 'row';
-            const status_lbl = document.createElement('h6');
-            status_lbl.className = 'col-6';
-            status_lbl.innerText = 'Status';
-            status_row.appendChild(status_lbl);
+    let cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
 
-            const status = document.createElement('h6');
-            status.className = 'col-6';
-            status.innerText = character.status;
-            status_row.appendChild(status);
-          body.appendChild(status_row);
+    let title = document.createElement('h5');
+    title.innerText = character.name;
+    title.className = 'card-title';
 
-          const species_row = document.createElement('div');
-          species_row.className = 'row';
-            const species_lbl = document.createElement('h6');
-            species_lbl.className = 'col-6';
-            species_lbl.innerText = 'Species';
-            species_row.appendChild(species_lbl);
+    let text = document.createElement('p');
+    text.innerText = character.species;
+    text.className = 'card-text';
 
-            const species = document.createElement('h6');
-            species.className = 'col-6';
-            species.innerText = character.species;
-            species_row.appendChild(species);
-          body.appendChild(species_row);
+    let button = document.createElement('a');
+    button.className = 'btn btn-primary stretched-link';
+    button.text = 'Detail';
+    button.id = character.name + "b";
+    button.addEventListener("click", function () { spawnDetail(character.name); })
 
-          const origin_row = document.createElement('div');
-          origin_row.className = 'row';
-            const origin_lbl = document.createElement('h6');
-            origin_lbl.className = 'col-6';
-            origin_lbl.innerText = 'Origin';
-            origin_row.appendChild(origin_lbl);
-
-            const origin = document.createElement('h6');
-            origin.className = 'col-6';
-            origin.innerText = character.origin.name;
-            origin_row.appendChild(origin);
-          body.appendChild(origin_row);
-
-        card.appendChild(img);
-        card.appendChild(body);
-
-      auxcol.appendChild(card);
-      row.appendChild(auxcol);
-      containerRef.appendChild(row);
-       
-    })
+    cardBody.appendChild(title);
+    cardBody.appendChild(text);
+    cardBody.appendChild(button);
+    card.appendChild(img);
+    card.appendChild(cardBody);
+    containerRef.appendChild(card);
+  })
 }
 
+// Function to render the detail cards
+async function renderDetail() {
+  const data = await getData();
+  const dataMapped = data.results.map((character) => {
+
+    let card = document.createElement('div');
+    card.className = 'card shadow cursor-pointer';
+    card.id = character.name;
+    card.style.display = 'none';
+
+    let title = document.createElement('h2');
+    title.innerText = "DETAIL:";
+    title.className = 'card-title';
+
+    let cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+
+    let gender = document.createElement('p');
+    gender.innerHTML = "<b>Gender:  </b>" + character.gender;
+    gender.className = 'card-text';
+
+    let location = document.createElement('p');
+    location.innerHTML = "<b>Location:  </b>" + character.location.name;
+    location.className = 'card-text';
+
+    let episodes = document.createElement('ul');
+    episodes.className = 'card-text';
+    episodes.innerHTML = "<b>Episodes: </b> <br> <br> "  ;
+
+    for (var ep of character.episode) {
+      let episode = document.createElement('li');
+      episode.innerText = ep;
+      episodes.appendChild(episode);
+    }
+    
+  
+    cardBody.appendChild(title);
+    cardBody.appendChild(gender);
+    cardBody.appendChild(location);
+    cardBody.appendChild(episodes);
+    card.appendChild(cardBody);
+    containerDetailRef.appendChild(card);
+  })
+}
+
+// Function to display the detail once a general cards is clicked
+function spawnDetail(id) {
+
+  if(isDetail == false){
+    var objects = document.getElementsByClassName("card");
+    for (var obj of objects) {
+      obj.style.display = 'none';
+    }
+    containerDetailRef.style.display = 'inline-flex';
+  
+    document.getElementById(id + "b").text = 'Go back';
+    document.getElementById(id + "c").style.display = 'inline-flex';
+    document.getElementById(id).style.display = 'inline-flex';
+
+    isDetail = true;
+
+  }
+  else{
+    dispawnDetail(id)
+    isDetail = false;
+  }
+
+};
+
+
+// Function to display the general cards once a detail card is clicked
+function dispawnDetail(id) {
+  containerDetailRef.style.display = 'none';
+
+  var objects = document.getElementsByClassName("card");
+  for (var obj of objects) {
+    obj.style.display = 'inline-flex';
+  }
+
+  document.getElementById(id + "b").text = 'Detail';
+
+};
+
+
+// Render the general cards
 render();
+// Render the detail cards
+renderDetail();
+

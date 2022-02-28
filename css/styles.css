@@ -1,5 +1,36 @@
 body {
   font-family: 'Lato', sans-serif;
+  text-align: center;
+}
+
+
+#container{
+  display: inline-flex ;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+}
+
+.card{
+  width: 18rem;
+  margin: 1.25rem;
+}
+
+#containerDetail{
+  display: none ;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  vertical-align: top;
+  
+}
+
+#containerDetail .card {
+  width: 28rem;
+  text-align: left;
+}
+
+#containerDetail .card .card-title{
+  text-align: center;
 }
 
 

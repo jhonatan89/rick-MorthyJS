@@ -76,17 +76,17 @@ async function renderDetail(){
     name.textContent = character.name;
     name.className = 'card-title';
 
-    const parrafo1 = document.createElement('p');
-    parrafo1.textContent = 'Gender: ' + character.gender;
-    parrafo1.className = 'card-text';
+    const genero = document.createElement('p');
+    genero.textContent = 'Gender: ' + character.gender;
+    genero.className = 'card-text';
 
-    const parrafo2 = document.createElement('p');
-    parrafo2.textContent = 'Specie: '+ character.species;
-    parrafo2.className = 'card-text';
+    const especie = document.createElement('p');
+    especie.textContent = 'Specie: '+ character.species;
+    especie.className = 'card-text';
 
-    const parrafo3 = document.createElement('p');
-    parrafo3.textContent = 'Location: '+ character.location.name;
-    parrafo3.className = 'card-text';
+    const locacion = document.createElement('p');
+    locacion.textContent = 'Location: '+ character.location.name;
+    locacion.className = 'card-text';
 
     const btn = document.createElement('button');
     btn.className = 'btn';
@@ -94,9 +94,9 @@ async function renderDetail(){
     btn.addEventListener("click", function () { showList(); })
     
     body.appendChild(name);
-    body.appendChild(parrafo1);
-    body.appendChild(parrafo2);
-    body.appendChild(parrafo3);
+    body.appendChild(genero);
+    body.appendChild(especie);
+    body.appendChild(locacion);
     body.appendChild(btn);
 
     div.appendChild(image);
@@ -112,7 +112,7 @@ async function viewDetail(character){
   detail.style.display = 'block';
 
 }
-async function showList(){
+async function viewList(){
   container.style.display= 'block';
   detail.style.display = 'none';
 
